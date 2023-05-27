@@ -1,5 +1,5 @@
-%% Spring Damper Optimization %% 
-function [tt,x,v] = function_eval(m,c,k,f,t,x0,v0,alpha)
+%% Function Model of Mass Spring Damper System%% 
+function [tt,x,v] = model(m,c,k,f,t,x0,v0,alpha)
 
 % Inputs:
 %   m:          Sprung mass [kg] (scalar)

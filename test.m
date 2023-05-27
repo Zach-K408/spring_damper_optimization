@@ -1,4 +1,4 @@
-%% Testing Parameters
+%% Model Test Parameters %% 
 % intial conditions
 x0 = 0;
 v0 = 0;
@@ -23,19 +23,19 @@ k = 15; % kg/s^2
 % solver tolerances
 alpha = odeset('RelTol',1e-6,'AbsTol',1e-6);
 
-%% function call for varying damping stiffness
+%% function call for varying damping stiffness %%
 
 % xc = zeros(length(c_vals),length(t));     % store position damping pair values
 % vc = 0*xc;                            % store velocity damping pair values
 % 
 % for i=1:length(c_vals)
-%     [~,xc(i,:),vc(i,:)] = function_eval(m,c_vals(i),k,f,t,x0,v0,alpha);
+%     [~,xc(i,:),vc(i,:)] = model(m,c_vals(i),k,f,t,x0,v0,alpha);
 % end
-%% function call constant stiffness parameters
+%% function call constant stiffness parameters %%
 
-[~,x,v] = function_eval(m,c,k,f,t,x0,v0,alpha);
+[~,x,v] = model(m,c,k,f,t,x0,v0,alpha);
 
-%% plotting response
+%% plot response %%
 
 % plot forcing function
 figure
