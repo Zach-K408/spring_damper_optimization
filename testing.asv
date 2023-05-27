@@ -8,13 +8,13 @@ t_end = 50;
 t_step = 0.1;
 t = t_start:t_step:t_end;
 % forcing function
-f0 = 1;
+f0 = 10;
 % pulsing
-t_on = 50;
-f = @(t) f0*(heaviside(t) - heaviside(t-t_on));
+%t_on = 25;
+%f = @(t) f0*(heaviside(t) - heaviside(t-t_on));
 % sinusoidal
-% w=1;
-% f = @(t) f0*sin(w*t);
+w=1;
+f = @(t) f0*sin(w*t);
 % system properties
 m = 100; % kg
 % decision variables
@@ -61,8 +61,8 @@ grid on; hold on
 xlabel('Time (s)','fontsize',14,'Interpreter','latex')
 ylabel('Velocity $\left( \frac{m}{s} \right)$','fontsize',14,'Interpreter','latex')
 
-% legend([repmat('$c= $ ',[length(c_vals) 1]) num2str(c_vals')],...
-%     'fontsize',14,'Interpreter','latex','location','southeast')
+legend([repmat('$c= $ ',[length(c_vals) 1]) num2str(c_vals')],...
+    'fontsize',14,'Interpreter','latex','location','southeast')
 
 set(gca,'TickLabelInterpreter','latex')
 set(gcf,'Position',[988 196 881 714])
