@@ -98,19 +98,19 @@ end
 
 %grid on
 
-%% Generate 3d acceleration plot of sprung mass
+%% Generate Acceleration 
 
 % initialize
 coordinates = [];
 max_responses = [];
 
 % define transfer function as function handle
-transfer_function = @(s,c,k) tf([(c*c2),(k*c2+k2*c),(k*k2)], ...
+transfer_function = @(s,c,k) tf([(c*c2),(k*c2+k2*c),(k*k2),0,0], ...
     [(m1*m2),(m1*c+m1*c2+m2*c),(m1*k+m1*k2+k*m2),(c*c2+c*k2+k*c2),(k*k2)]);
 
 % define domain
-c_range = 50:50:5000;
-k_range = 1000:500:50000;
+c_range = 1000:1000:10000;
+k_range = 100000:5000:150000;
 
 % evalute function at each coordinate
 for c = c_range
