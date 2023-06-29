@@ -3,3 +3,7 @@ clc
 clear
 close all;
 
+
+X = [y,u1]
+
+y = [y,u1];
