@@ -123,13 +123,13 @@ end
 Z = reshape(max_accelerations, length(k_range), length(c_range));
 
 % generate 3D plot
-f1 = figure('name','Acceleration Method 1');
+f1 = figure('name','Objective Function');
 surf(C,K,Z);
 colorbar;
-xlabel('Damping Coefficient')
-ylabel('Spring Coefficent')
-zlabel('Sprung Mass Acceleration')
-title('Function to Optimize')
+xlabel('Damping Coefficient (Ns/m)')
+ylabel('Spring Coefficent (N/m)')
+zlabel('Sprung Mass Acceleration (m/s^2)')
+title('Objective Function')
 
 % create a table coordinates
 table = array2table([coordinates, max_accelerations], "VariableNames",{'c','k','accel'});
