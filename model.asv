@@ -101,8 +101,8 @@ transfer_function = @(s,c,k) tf([(c*c2),(k*c2+k2*c),(k*k2)], ...
     [(m1*m2),(m1*c+m1*c2+m2*c),(m1*k+m1*k2+k*m2),(c*c2+c*k2+k*c2),(k*k2)]);
 
 % define domain
-c_range = 980:25:4300;
-k_range = 9000:100:30000;
+c_range = 0:10:1000;
+k_range = 0:50:5000;
 
 % evalute function at each coordinate
 for c = c_range
@@ -123,12 +123,12 @@ end
 Z = reshape(max_accelerations, length(k_range), length(c_range));
 
 % generate 3D plot
-f1 = figure('name','Acceleration Method 1');
+f1 = figure('name','Objective Function');
 surf(C,K,Z);
 colorbar;
-xlabel('Damping Coefficient')
-ylabel('Spring Coefficent')
-zlabel('Sprung Mass Acceleration')
+xlabel('Damping Coefficient (Ns/m)')
+ylabel('Spring Coefficent (N/m)')
+zlabel('Sprung Mass Acceleration (m/s^2)')
 title('Objective Function')
 
 % create a table coordinates
@@ -196,6 +196,6 @@ writetable(table,'output.csv');
 % 
 % disp(table)
 
-%% Initial Problem Investigation
+Op
 
 

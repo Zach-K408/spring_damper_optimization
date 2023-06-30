@@ -1,0 +1,27 @@
+% Brute Force
+
+data = readtable('output.csv');
+
+X = data(:, 1);
+Y = data(:, 2);
+Z = data(:, 3);
+
+disp(Z(i))
+
+minZ = Z(1);  
+minIndex = 1;  
+
+for i = 2:length(Z)
+    if Z(i) < minZ
+        minZ = Z(i);
+        minIndex = i;
+    end
+end
+
+minX = X(minIndex);
+minY = Y(minIndex);
+
+disp('The minimum is found at the coordinates:');
+disp([minX, minY, minZ]);
+
+

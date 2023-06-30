@@ -195,7 +195,3 @@ writetable(table,'output.csv');
 % table = array2table([coordinates, max_relative_displacements], "VariableNames",{'c','k','z**'});
 % 
 % disp(table)
-
-%% Initial Problem Investigation
-
-
