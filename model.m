@@ -29,12 +29,12 @@ c1 = 1000; % [Ns/m]
 c2 = 2500; % [Ns/m]
 
 %% Laplacian model
-
-num = [(c1*c2),(k1*c2+k2*c1),(k1*k2)];
-den = [(m1*m2),(m1*c1+m1*c2+m2*c1),(m1*k1+m1*k2+k1*m2),(c1*c2+c1*k2+k1*c2),(k1*k2)];
-
-sys1 = tf(num, den);
-display(sys1)
+% 
+% num = [(c1*c2),(k1*c2+k2*c1),(k1*k2)];
+% den = [(m1*m2),(m1*c1+m1*c2+m2*c1),(m1*k1+m1*k2+k1*m2),(c1*c2+c1*k2+k1*c2),(k1*k2)];
+% 
+% sys1 = tf(num, den);
+% display(sys1)
 
 % num2 = [m1*c2,(c1*c2+m1*k2),(k1*c2+c1*k2),k1*k2];
 % den2 = [m1*m2,(m1*c1+m1*c2+m2*c1),(m1*k1+m1*k2+k1*m2),(c1*c2+c1*k2+k1*c2),k1*k2];
@@ -47,7 +47,7 @@ display(sys1)
 N = 500; % Number of samples
 
 v = 80/3.6; % Speed
-t = linspace(0, 250/(v), N); % Time vector
+t = linspace(0, 275/(v), N); % Time vector
 
 s = v*t; % Space coordinate (m)
 
@@ -82,27 +82,18 @@ for i=1:length(t)
     zr(i) = road_profile(t(i), p);
 end
 
-%% Visualization
-
-% f1 = figure('name','Displacement of Sprung Mass');
-% lsim(sys1,zr,s/v)
-% title('Displacement of Sprung Mass')
-% ylabel('Road Displacement (m)')
-% legend('Displacement of Sprung Mass')
-% ylim([-0.1,0.1])
-
-% f2 = figure('name','Displacement of Unsprung Mass');
-% lsim(sys2,zr,s/v)
-% ylabel('Road Displacement (m)')
-% title('Displacement of Unsprung Mass')
-
-%grid on
+%
+f0 = figure('name','Road Profile');
+plot(t,zr)
+xlabel('Time (s)')
+ylabel('Road Displacement (m)')
+title('Road Profile')
 
 %% Generate 3d acceleration plot of sprung mass
 
 % initialize
 coordinates = [];
-max_responses = [];
+max_displacements = [];
 max_accelerations = [];
 
 % define transfer function as function handle
@@ -110,18 +101,18 @@ transfer_function = @(s,c,k) tf([(c*c2),(k*c2+k2*c),(k*k2)], ...
     [(m1*m2),(m1*c+m1*c2+m2*c),(m1*k+m1*k2+k*m2),(c*c2+c*k2+k*c2),(k*k2)]);
 
 % define domain
-c_range = 50:50:5000;
-k_range = 1000:500:50000;
+c_range = 980:25:4300;
+k_range = 9000:100:30000;
 
 % evalute function at each coordinate
 for c = c_range
     for k = k_range
         sys = transfer_function([], c, k);
         y = lsim(sys, zr, t);
-        max_response = max(abs(y));
-        max_acceleration = max(abs(diff(diff(y)) / (t(2) - t(1))^2));
+        max_displacement = max(y);
+        max_acceleration = max(diff(diff(y)) / (t(2) - t(1))^2);
         coordinates = [coordinates; c, k];
-        max_responses = [max_responses; max_response];
+        max_displacements = [max_displacements; max_displacement];
         max_accelerations = [max_accelerations; max_acceleration];
         
     end
@@ -141,65 +132,70 @@ zlabel('Sprung Mass Acceleration')
 title('Function to Optimize')
 
 % create a table coordinates
-table = array2table([coordinates, max_responses], "VariableNames",{'c','k','z'});
+table = array2table([coordinates, max_accelerations], "VariableNames",{'c','k','accel'});
 
-disp(table)
-
+writetable(table,'output.csv');
 %% Generate 3d acceleration plot of sprung mass (method 2)
+% 
+% % initialize
+% coordinates = [];
+% max_relative_displacements = [];
+% max_accelerations = [];
+% 
+% % define transfer function as function handle
+% transfer_function1 = @(s,c,k) tf([(c*c2),(k*c2+k2*c),(k*k2)], ...
+%     [(m1*m2),(m1*c+m1*c2+m2*c),(m1*k+m1*k2+k*m2),(c*c2+c*k2+k*c2),(k*k2)]);
+% 
+% transfer_function2 = @(s,c,k) tf([m1*c2,(c*c2+m1*k2),(k*c2+c*k2),k*k2], ...
+%     [m1*m2,(m1*c+m1*c2+m2*c),(m1*k+m1*k2+k*m2),(c*c2+c*k2+k*c2),k*k2]);
+% 
+% % define domain
+% c_range = 980:25:4300;
+% k_range = 9000:100:30000;
+% 
+% % evalute function at each coordinate
+% for c = c_range
+%     for k = k_range
+%         sys1 = transfer_function1([], c, k);
+%         y1 = lsim(sys1, zr, t);
+%         sys2 = transfer_function2([], c, k);
+%         y2 = lsim(sys2, zr, t);       
+% 
+%         z = y1-y2;
+% 
+%         max_relative_displacement = max(z);
+%         relative_velocity = diff(z)/(t(2)-t(1));
+%        
+%         max_acceleration = max((k*z(2:end)+c*relative_velocity)/m1);
+% 
+%         coordinates = [coordinates; c, k];
+%         max_relative_displacements = [max_relative_displacements; max_relative_displacement];
+%         max_accelerations = [max_accelerations; max_acceleration];
+% 
+% 
+% 
+%     end
+% end
+% 
+% 
+% % Reshape the coordinates and maximum response values into a grid
+% [C, K] = meshgrid(c_range, k_range);
+% Z = reshape(max_accelerations, length(k_range), length(c_range));
+% 
+% % generate 3D plot
+% f2 = figure('name','Acceleration Method 2');
+% surf(C,K,Z);
+% colorbar;
+% xlabel('Damping Coefficient')
+% ylabel('Spring Coefficent')
+% zlabel('Sprung Mass Acceleration')
+% title('Function to Optimize')
+% 
+% % create a table coordinates
+% table = array2table([coordinates, max_relative_displacements], "VariableNames",{'c','k','z**'});
+% 
+% disp(table)
 
-% initialize
-coordinates = [];
-max_responses = [];
-max_accelerations = [];
+%% Initial Problem Investigation
 
-% define transfer function as function handle
-transfer_function1 = @(s,c,k) tf([(c*c2),(k*c2+k2*c),(k*k2)], ...
-    [(m1*m2),(m1*c+m1*c2+m2*c),(m1*k+m1*k2+k*m2),(c*c2+c*k2+k*c2),(k*k2)]);
 
-transfer_function2 = @(s,c,k) tf([m1*c2,(c*c2+m1*k2),(k*c2+c*k2),k*k2], ...
-    [m1*m2,(m1*c+m1*c2+m2*c),(m1*k+m1*k2+k*m2),(c*c2+c*k2+k*c2),k*k2]);
-
-% define domain
-c_range = 50:50:5000;
-k_range = 1000:500:50000;
-
-% evalute function at each coordinate
-for c = c_range
-    for k = k_range
-        sys1 = transfer_function1([], c, k);
-        y1 = lsim(sys1, zr, t);
-        sys2 = transfer_function2([], c, k);
-        y2 = lsim(sys2, zr, t);
-        z = y1(2:end)-y2(2:end);
-        z1_dot = diff(y1) / (t(2)-t(1));
-        z2_dot = diff(y1) / (t(2)-t(1));
-
-        a = (k*z + c*(z1_dot-z2_dot))/m1;
-        
-        max_response = max(abs(z));
-
-        max_acceleration = max(abs(a));
-        coordinates = [coordinates; c, k];
-        max_responses = [max_responses; max_response];
-        max_accelerations = [max_accelerations; max_acceleration];
-        
-    end
-end
-
-% Reshape the coordinates and maximum response values into a grid
-[C, K] = meshgrid(c_range, k_range);
-Z = reshape(max_accelerations, length(k_range), length(c_range));
-
-% generate 3D plot
-f2 = figure('name','Acceleration Method 2');
-surf(C,K,Z);
-colorbar;
-xlabel('Damping Coefficient')
-ylabel('Spring Coefficent')
-zlabel('Sprung Mass Acceleration')
-title('Function to Optimize')
-
-% create a table coordinates
-table = array2table([coordinates, max_responses], "VariableNames",{'c','k','z'});
-
-disp(table)
