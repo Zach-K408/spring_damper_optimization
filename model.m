@@ -21,12 +21,12 @@ close all;
 %   z1:    Displacement of sprung mass [m] (vector)
 %   z2:    Displacement of unsprung mass [m] (vector)
 
-m1 = 290; % [kg]
-m2 = 25; % [kg]
-k1 = 16200; % [N/m]
-k2 = 191000; % [N/m]
-c1 = 1000; % [Ns/m]
-c2 = 2500; % [Ns/m]
+m1 = 500; % [kg]
+m2 = 30; % [kg]
+k1 = 20000; % [N/m]
+k2 = 200000; % [N/m]
+c1 = 1500; % [Ns/m]
+c2 = 1; % [Ns/m]
 
 %% Laplacian model
 % 
