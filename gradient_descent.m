@@ -27,6 +27,9 @@ for i = 1:N
     simplex(i+1,:) = point;
 end
 
+% Start timer
+tic;
+
 % Nelder-Mead iterations
 iter = 0;
 while iter < max_iter
@@ -111,6 +114,9 @@ while iter < max_iter
     iter = iter + 1;
 end
 
+% Stop time
+computation_time2 = toc;
+
 % Extract minimum point
 X = simplex(1,1);
 Y = simplex(1,2);
@@ -122,3 +128,4 @@ min_Z = max_a;
 % Display results
 disp(['Minimum found at (X, Y) = (' num2str(X) ', ' num2str(Y) ')']);
 disp(['Minimum value of Z: ' num2str(min_Z)]);
+disp(['Computational time: ' num2str(computation_time2) ' seconds']);

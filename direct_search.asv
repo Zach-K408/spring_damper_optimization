@@ -22,25 +22,25 @@ for c = c_range
         y = lsim(sys, zr, t);
         max_acceleration = max(diff(diff(y)) / (t(2) - t(1))^2);
         coordinates = [coordinates; c, k];
+        max_displacements = [max_displacements; max_displacement];
         max_accelerations = [max_accelerations; max_acceleration];
         
     end
 end
 
+% Reshape the coordinates and maximum response values into a grid
+[C, K] = meshgrid(c_range, k_range);
+Z = reshape(max_accelerations, length(k_range), length(c_range));
+
 % create a table coordinates
-table = array2table([coordinates, max_accelerations], "VariableNames",{'X','Y','Z'});
+table = array2table([coordinates, max_accelerations], "VariableNames",{'c','k','accel'});
 
-% convert table into array for indexing
-data = table2array(table);
-
-X = data(:,1);
-Y = data(:,2);
-Z = data(:,3);
 
 minZ = Z(1);  
 minIndex = 1;  
 
-% search for minimum Z value in array and save the index
+
+% start searching
 for i = 2:numel(Z)
     if Z(i) < minZ
         minZ = Z(i);

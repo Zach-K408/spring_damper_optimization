@@ -21,8 +21,8 @@ close all;
 %   z1:    Displacement of sprung mass [m] (vector)
 %   z2:    Displacement of unsprung mass [m] (vector)
 
-m1 = 400; % [kg]
-m2 = 25; % [kg]
+m1 = 500; % [kg]
+m2 = 30; % [kg]
 k1 = 20000; % [N/m]
 k2 = 200000; % [N/m]
 c1 = 1500; % [Ns/m]
@@ -133,6 +133,8 @@ title('Objective Function')
 
 % create a table coordinates
 table = array2table([coordinates, max_accelerations], "VariableNames",{'c','k','accel'});
+
+disp(table)
 
 writetable(table,'output.csv');
 %% Generate 3d acceleration plot of sprung mass (method 2)
