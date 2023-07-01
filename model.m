@@ -45,10 +45,10 @@ c2 = 1; % [Ns/m]
 
 %% Road Profile
 
-N = 500; % Number of samples
+N = 1000; % Number of samples
 
 v = 80/3.6; % Speed
-t = linspace(0, 275/(v), N); % Time vector
+t = linspace(0, 250/(v), N); % Time vector
 
 s = v*t; % Space coordinate (m)
 
@@ -134,8 +134,6 @@ title('Objective Function')
 
 % create a table coordinates
 table = array2table([coordinates, max_accelerations], "VariableNames",{'c','k','accel'});
-
-disp(table)
 
 writetable(table,'output.csv');
 %% Generate 3d acceleration plot of sprung mass (method 2)

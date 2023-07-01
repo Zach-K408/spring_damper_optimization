@@ -57,4 +57,4 @@ minY = Y(minIndex);
 disp('The minimum is found at the coordinates:');
 format long
 disp([minX, minY, minZ]);
-disp(['Computational time: ' num2str(computation_time) ' seconds']);
+disp(['Computational time: ' num2str(computational_time1) ' seconds']);
