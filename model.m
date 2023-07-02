@@ -35,7 +35,6 @@ c2 = 1; % [Ns/m]
 % 
 % sys1 = tf(num, den);
 % display(sys1)
-
 %
 % num2 = [m1*c2,(c1*c2+m1*k2),(k1*c2+c1*k2),k1*k2];
 % den2 = [m1*m2,(m1*c1+m1*c2+m2*c1),(m1*k1+m1*k2+k1*m2),(c1*c2+c1*k2+k1*c2),k1*k2];
@@ -130,7 +129,20 @@ colorbar;
 xlabel('Damping Coefficient (Ns/m)')
 ylabel('Spring Coefficent (N/m)')
 zlabel('Sprung Mass Acceleration (m/s^2)')
-title('Objective Function')
+title('Surface Plot of Objective Function')
+
+%%
+% generate 2D contour plot
+f2 = figure('name','Objective Function');
+contourf(C,K,Z,100);
+colormap();
+colorbar();
+xlabel('Damping Coefficient (Ns/m)')
+ylabel('Spring Coefficent (N/m)')
+zlabel('Sprung Mass Acceleration (m/s^2)')
+title('Contour Plot of Objective Function')
+
+%%
 
 % create a table coordinates
 table = array2table([coordinates, max_accelerations], "VariableNames",{'c','k','accel'});

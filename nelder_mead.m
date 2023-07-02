@@ -1,10 +1,9 @@
-% Gradient Descent Method
+% Nelder-Mead Method
 
 % Objective function Z(X, Y)
 transfer_function = @(s,c,k) tf([(c*c2),(k*c2+k2*c),(k*k2)], ...
     [(m1*m2),(m1*c+m1*c2+m2*c),(m1*k+m1*k2+k*m2),(c*c2+c*k2+k*c2),(k*k2)]);
 
-% Nelder-Mead algorithm
 N = 2; % Number of variables
 alpha = 1; % Reflection coefficient
 beta = 0.5; % Contraction coefficient
