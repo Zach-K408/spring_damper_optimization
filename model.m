@@ -46,7 +46,7 @@ c2 = 1; % [Ns/m]
 
 N = 1000; % Number of samples
 
-v = 80/3.6; % Speed
+v = 100/3.6; % Speed
 t = linspace(0, 250/(v), N); % Time vector
 
 s = v*t; % Space coordinate (m)
@@ -82,7 +82,7 @@ for i=1:length(t)
     zr(i) = road_profile(t(i), p);
 end
 
-%
+% plot road profile
 f0 = figure('name','Road Profile');
 plot(t,zr)
 xlabel('Time (s)')
