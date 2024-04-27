@@ -11,7 +11,7 @@ ub = [9000, 30000];
 % inital point
 x0 = [1000,10000];
 
-% Pattern search parameters
+% pattern search parameters
 stepSize = 10;   % Initial step size
 stepFactor = 0.95;   % Step size reduction factor
 tolerance = 1e-6;   % Tolerance for convergence
@@ -83,7 +83,7 @@ else
     disp(f);
 end
 
-% Stop time
+% stop time
 computation_time3 = toc;
 
 disp(['Computational time: ' num2str(computation_time3) ' seconds']);

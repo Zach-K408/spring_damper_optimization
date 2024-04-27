@@ -12,7 +12,7 @@ transfer_function = @(s,c,k) tf([(c*c2),(k*c2+k2*c),(k*k2)], ...
 c_range = 980:25:4300;
 k_range = 9000:100:30000;
 
-% Start timer
+% start timer
 tic;
 
 % evalute function at each coordinate
@@ -48,7 +48,7 @@ for i = 2:numel(Z)
     end
 end
 
-% Stop timer
+% stop timer
 computational_time1 = toc;
 
 minX = X(minIndex);
