@@ -23,6 +23,5 @@ option while maintaining safety.
 
 The objective of this repository is to optimize the spring stiffness and damping coefficients of a passive suspension system. The passive suspension system is modelled using the following quarter-car model.
 
-![quarter car model](images/quarter_car_model.jpg)
-
+![quarter_car_model](https://github.com/Zach-K408/spring_damper_optimization/assets/99453467/8970f7a5-da9a-4c47-ae7c-8a0edc325cb4)
 
