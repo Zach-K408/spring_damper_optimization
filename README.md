@@ -21,7 +21,7 @@ these two scenarios and is different based on the vehicle type. Race cars need s
 for the best handling performance while regular passenger vehicles require the most comfortable
 option while maintaining safety.
 
-This repository explores optimization methods for selecting the optimal spring stiffness and damping coefficients of a passive suspension system, aiming to enhance rider comfort. The following quarter-car model and a random road input _u_ are used for analysis.
+This repository explores optimization methods for selecting the optimal spring stiffness and damping coefficients of a passive suspension system, aiming to enhance rider comfort. The following quarter-car model is considered, where _u_ is the random road profile.
 
 <p align='center'>
   <img width=250px src='https://github.com/Zach-K408/spring_damper_optimization/assets/99453467/64d619fc-869a-4148-ba42-197f8e1f619f' />
